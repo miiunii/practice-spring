@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -43,6 +44,7 @@ public class UserRepositoryTest {
     public void update() {
         Optional<User> user = userRepository.findById(2L);
 
+
         user.ifPresent(selectUser -> {
             selectUser.setAccount("pppp");
             selectUser.setUpdatedAt(LocalDateTime.now());
@@ -53,7 +55,20 @@ public class UserRepositoryTest {
     }
 
     @Test
+    @Transactional // 테스트만 해보고 값은 원래대로 돌려줌
     public void delete() {
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser -> {
+            userRepository.delete(selectUser);
+        });
+
+        Optional<User> deleteUser = userRepository.findById(2L);
+
+        if(deleteUser.isPresent()) {
+            System.out.println("데이터 존재 : " + deleteUser.get());
+        } else {
+            System.out.println("데이터 삭제 데이터 없음 ");
+        }
     }
 }
