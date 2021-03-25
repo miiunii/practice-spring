@@ -31,11 +31,14 @@ public class UserRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void read() {
         Optional<User> user = userRepository.findById(2L);
 
         user.ifPresent(selectUser -> {
-            System.out.println("user : " + selectUser);
+            selectUser.getOrderDetailList().stream().forEach(detail -> {
+                System.out.println(detail.getItemId());
+            });
         });
 
     }
