@@ -27,7 +27,4 @@ public class User {
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId")
-    private List<OrderDetail> orderDetailList;
 }

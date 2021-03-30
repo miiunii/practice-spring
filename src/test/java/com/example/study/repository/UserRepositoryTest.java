@@ -2,6 +2,7 @@ package com.example.study.repository;
 
 import com.example.study.StudyApplication;
 import com.example.study.model.entity.User;
+import jdk.vm.ci.meta.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class UserRepositoryTest {
@@ -18,28 +21,34 @@ public class UserRepositoryTest {
 
     @Test
     public void create() {
+        String account = "Test01";
+        String password = "Test01";
+        String status = "REGISTERED";
+        String email = "Test01@gmail.com";
+        String phoneNumber = "010-1111-2222";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "AdminServer";
+
         User user = new User();
-        user.setAccount("TestUser02");
-        user.setEmail("TestUser@gmail.com");
-        user.setPhoneNumber("010-2222-2222");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("test2");
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
 
         User newUser = userRepository.save(user);
-        System.out.println("newUser : " + newUser);
-        System.out.println(user);
+        assertNotNull(newUser);
     }
 
     @Test
     @Transactional
     public void read() {
-        Optional<User> user = userRepository.findById(2L);
-
-        user.ifPresent(selectUser -> {
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                System.out.println(detail.getItemId());
-            });
-        });
+        User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+        System.out.println(user);
 
     }
 
