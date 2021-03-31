@@ -50,15 +50,23 @@ public class UserRepositoryTest {
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
 
         user.getOrderGroupList().stream().forEach(orderGroup -> {
-            System.out.println(orderGroup.getTotalPrice());
-            System.out.println(orderGroup.getRevName());
-            System.out.println(orderGroup.getRevAddress());
-            System.out.println(orderGroup.getTotalQuantity());
+            System.out.println("------------------주문묶음--------------------");
+            System.out.println("총금 : " + orderGroup.getTotalPrice());
+            System.out.println("수령인 : " + orderGroup.getRevName());
+            System.out.println("수령지 : " + orderGroup.getRevAddress());
+            System.out.println("총수량 : " + orderGroup.getTotalQuantity());
 
+            System.out.println("-------------------주문상세-------------------");
             orderGroup.getOrderDetailList().forEach(orderDetail -> {
-                System.out.println(orderDetail.getStatus());
-                System.out.println(orderDetail.getArrivalDate());
+                System.out.println("주문상태 : " + orderDetail.getStatus());
+                System.out.println("주문도착예정일 : " + orderDetail.getArrivalDate());
+
+                System.out.println("아이템이름 : " + orderDetail.getItem().getName());
+                System.out.println("콜센터 : " + orderDetail.getItem().getPartner().getCallCenter());
+
+                System.out.println("카테고리 타이틀 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
             });
+
         });
 
         System.out.println(user);
