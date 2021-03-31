@@ -22,8 +22,8 @@ public class OrderDetailRepositoryTest {
         orderDetail.setQuantity(1);
         orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
 
-        orderDetail.setOrderGroupId(1L); // 장바구니 번호
-        orderDetail.setItemId(1L); // 장바구니 담긴 상품
+//        orderDetail.setOrderGroupId(1L); // 장바구니 번호
+//        orderDetail.setItemId(1L); // 장바구니 담긴 상품
 
         orderDetail.setCreatedAt(LocalDateTime.now());
         orderDetail.setCreatedBy("AdminServer");

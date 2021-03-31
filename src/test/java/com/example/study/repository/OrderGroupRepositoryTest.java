@@ -30,7 +30,7 @@ public class OrderGroupRepositoryTest extends StudyApplicationTests {
         orderGroup.setCreatedAt(LocalDateTime.now());
         orderGroup.setUpdatedAt(LocalDateTime.now());
         orderGroup.setUpdatedBy("ADMIN");
-        orderGroup.setUserId(1L);
+//        orderGroup.setUserId(1L);
 
         OrderGroup newOrderGroup = orderGroupRepository.save(orderGroup);
 
