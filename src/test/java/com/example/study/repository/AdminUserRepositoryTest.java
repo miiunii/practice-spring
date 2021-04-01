@@ -17,8 +17,8 @@ public class AdminUserRepositoryTest extends StudyApplicationTests {
     @Test
     public void create() {
         AdminUser adminUser = new AdminUser();
-        adminUser.setAccount("AdminUser01");
-        adminUser.setPassword("AdminUser01");
+        adminUser.setAccount("AdminUser02");
+        adminUser.setPassword("AdminUser02");
         adminUser.setStatus("REGISTERED");
         adminUser.setRole("SUPER");
 //        adminUser.setLastLoginAt();
@@ -26,8 +26,8 @@ public class AdminUserRepositoryTest extends StudyApplicationTests {
 //        adminUser.setLoginFailCount();
 //        adminUser.setRegisteredAt();
 //        adminUser.setUnregisteredAt();
-        adminUser.setCreatedAt(LocalDateTime.now());
-        adminUser.setCreatedBy("AdminServer");
+//        adminUser.setCreatedAt(LocalDateTime.now());
+//        adminUser.setCreatedBy("AdminServer");
 //        adminUser.setUpdatedAt();
 //        adminUser.setUpdatedBy();
         AdminUser newAdminUser = adminUserRepository.save(adminUser);
