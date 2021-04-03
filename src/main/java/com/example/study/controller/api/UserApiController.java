@@ -1,13 +1,17 @@
 package com.example.study.controller.api;
 
 import com.example.study.ifs.CrudInterface;
+import com.example.study.model.entity.User;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
 import com.example.study.model.network.response.UserApiResponse;
+import com.example.study.repository.UserRepository;
 import com.example.study.service.UserApiLogicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j // api loging
 @RestController
@@ -16,6 +20,9 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 
     @Autowired
     private UserApiLogicService userApiLogicService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     @PostMapping("")
@@ -34,7 +41,10 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
     @Override
     @PutMapping("")
     public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> userApiRequest) {
+
         return null;
+
+
     }
 
     @Override
