@@ -37,7 +37,19 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
                 .registeredAt(LocalDateTime.now())
                 .build();
 
+
         User newUser = userRepository.save(user);
+
+        String checkEmail = user.getEmail();
+        Optional<User> optional = userRepository.findByEmail(checkEmail);
+
+        return optional
+                .map(email -> {
+                    return Header.ERROR("409 이메일이 이미 존재합니다");
+                })
+                .orElseGet(() -> {
+                    return response(newUser);
+                });
 
         // 3. 생성된 데이터 -> userApiResponse return
         return response(newUser);
@@ -51,8 +63,12 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
         // user -> userApiResponse return
         return optional
-                .map(user -> response(user))
-                .orElseGet(() -> Header.ERROR("데이터 없음"));
+                .map(user -> {
+                    return response(user);
+                })
+                .orElseGet(() -> {
+                    return Header.ERROR("데이터 없음");
+                });
     }
 
     @Override
@@ -75,13 +91,29 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
         })
                 // 4. userApiResponse
-                .map(user -> userRepository.save(user)) // update
-                .map(updateUser -> response(updateUser)) // userApiResponse
-                .orElseGet(() -> Header.ERROR("데이터 없음"));
+                .map(user -> {
+                    return userRepository.save(user);
+                }) // update
+                .map(updateUser -> {
+                    return response(updateUser);
+                }) // userApiResponse
+                .orElseGet(() -> {
+                    return Header.ERROR("데이터 없음");
+                });
     }
 
     @Override
     public Header delete(Long id) {
+        // 1. id -> repository -> user
+        Optional<User> optional = userRepository.findById(id);
+        // 2. repository -> delete
+        optional.map(user -> {
+            userRepository.delete(user);
+            return Header.OK();
+        })
+                .orElseGet(() -> {
+                    return Header.ERROR("데이터없음");
+                });
         return null;
     }
 
